@@ -1,4 +1,34 @@
+# AccessToken Cache Microservice
+
+This application is meant to serve as an internal service to recover Auth0 M2M token for internal microservice communications.
+
+Creating this tokens in serverless can increase the usaged quota of your Auth0 subscription, so the goal is to reuse the `accessToken` for the expiration provided by auth0 until a new one is requested.
+
+The tokens are stored in **Upstash**
+
 This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+
+## Set up
+
+First clone the repo. Copy the `.env.local.example` file to `.env.local` (which will be ignored by Git):
+
+```bash
+cp .env.local.example .env.local
+```
+
+### Configuring Upstash
+
+1. Go to the [Upstash Console](https://console.upstash.com/) and create a new database
+
+#### Upstash environment
+
+`UPSTASH_REDIS_REST_URL` and `UPSTASH_REDIS_REST_TOKEN` find the variables in the database details page in Upstash Console.
+
+### Auth0 environment
+
+- `AUTH0_DOMAIN`: Can be found in the Auth0 dashboard under `settings`.
+- `AUTH0_CLIENT_ID`: Can be found in the Auth0 dashboard under `settings`.
+- `AUTH0_CLIENT_SECRET`: Can be found in the Auth0 dashboard under `settings`.
 
 ## Getting Started
 
@@ -14,21 +44,13 @@ Open [http://localhost:3000](http://localhost:3000) with your browser to see the
 
 You can start editing the page by modifying `pages/index.tsx`. The page auto-updates as you edit the file.
 
-[API routes](https://nextjs.org/docs/api-routes/introduction) can be accessed on [http://localhost:3000/api/hello](http://localhost:3000/api/hello). This endpoint can be edited in `pages/api/hello.ts`.
+[API routes](https://nextjs.org/docs/api-routes/introduction) can be accessed on [http://localhost:3000/api/token](http://localhost:3000/api/token). This endpoint can be edited in `pages/api/token.ts`.
 
-The `pages/api` directory is mapped to `/api/*`. Files in this directory are treated as [API routes](https://nextjs.org/docs/api-routes/introduction) instead of React pages.
+This is a mocked endpoint to provide the M2M token as an easy way to validate the usage.
 
-## Learn More
+## Tools used
 
-To learn more about Next.js, take a look at the following resources:
-
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
-
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js/) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
+- `Vercel` for deployment & development environment.
+- `Next.js` with typescript support to run the application
+- `Upstash` for Serverless Redis (cache).
+- `Auth0` for authorization management.
