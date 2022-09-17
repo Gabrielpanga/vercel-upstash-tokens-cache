@@ -24,7 +24,7 @@ export async function getAuth0M2MToken(audience: string): Promise<string> {
     return accessToken
   } catch (error) {
     if (error instanceof HTTPError) {
-      const message = `Could not get Auth0 M2M api key for AuthApi (auth0 clientId: ${auth0ClientId}) - ${error.message}`
+      const message = `Could not get Auth0 M2M api key for ${audience} (auth0 clientId: ${auth0ClientId}) - ${error.message}`
       console.error(message, error.response?.body)
     }
     throw error
